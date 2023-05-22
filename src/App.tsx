@@ -29,7 +29,6 @@ function App() {
     initializeBox();
   }, []);
 
-
    // check APIkey path Url
    useEffect(() => {
     checkApiParam();
@@ -114,6 +113,7 @@ function App() {
     handleFillCard(500, div2, "185px", "122px");
   };
 
+  // render Card Three
   const handleRenderCardThree = (list_eleBox: HTMLElement[]) => {
     return new Promise<void>((resolve) => {
       setScorePlayer((prevState: Score) => {
