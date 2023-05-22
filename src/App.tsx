@@ -3,6 +3,7 @@ import "./App.css";
 import background from "./assets/bg_sanbul.jpg";
 import { delay, handleFillCard, listCard } from "./utils";
 import { checkApiParam } from "./components/CheckUrl";
+import bg_hidden from './assets/images/hidden.png'
 
 type Score = undefined | number;
 
@@ -39,7 +40,7 @@ function App() {
     box?.map((item: any, index: number) => {
       return (
         <div className="box" id={item.v} key={index}>
-          <img src="./src/assets/images/hidden.png" className="front" />
+          <img src={`${bg_hidden}`} className="front" />
 
           <div
             className="back"
