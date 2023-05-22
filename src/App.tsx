@@ -8,24 +8,26 @@ type Score = undefined | number;
 
 function App() {
   // initial state
-  const [box, setBox] = useState<any>(() => {
-    for (let i: number = listCard.length - 1; i > 0; i--) {
-      // Generate random number
-      const j: number = Math.floor(Math.random() * (i + 1));
-
-      const temp: any = listCard[i];
-      listCard[i] = listCard[j];
-      listCard[j] = temp;
-    }
-
-    const newArr = listCard.filter((_, index) => {
-      return index < 6;
-    });
-    return newArr;
-  });
+  const [box, setBox] = useState<object[]>();
 
   const [scorePlayer, setScorePlayer] = useState<Score>();
   const [scoreBanker, setScoreBanker] = useState<Score>();
+
+  // initialize box
+  useEffect(() => {
+    const initializeBox = () => {
+      const shuffledList = [...listCard];
+      for (let i = shuffledList.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffledList[i], shuffledList[j]] = [shuffledList[j], shuffledList[i]];
+      }
+      const newArr = shuffledList.slice(0, 6);
+      setBox(newArr);
+    };
+  
+    initializeBox();
+  }, []);
+
 
    // check APIkey path Url
    useEffect(() => {
