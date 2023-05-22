@@ -57,16 +57,16 @@ function App() {
     for (let index = 0; index < list_eleBox.length; index++) {
       const div = list_eleBox[index];
       if (index === 0) {
-        handleFillCard((index + 1) * 1000, div, "185px", "632px");
+        handleFillCard((index + 1) * 1100, div, "185px", "632px");
       }
       if (index === 1) {
-        handleFillCard((index + 1) * 1000, div, "185px", "201px");
+        handleFillCard((index + 1) * 1100, div, "185px", "201px");
       }
       if (index === 2) {
-        handleFillCard((index + 1) * 1000, div, "185px", "552px");
+        handleFillCard((index + 1) * 1100, div, "185px", "552px");
       }
       if (index === 3) {
-        await handleFillCard((index + 1) * 1000, div, "185px", "122px");
+        await handleFillCard((index + 1) * 1100, div, "185px", "122px");
         await delay(1000);
         list_eleBox[0].classList.add("fill");
         setScorePlayer(Number(list_eleBox[0].id));
@@ -79,9 +79,9 @@ function App() {
 
   // handle Card Two
   const handleFillCardTwo = async (div1: HTMLElement, div2: HTMLElement) => {
-    handleFillCard(200, div1, "220px", "415px");
-    handleFillCard(200, div2, "220px", "335px");
-    await delay(200);
+    handleFillCard(500, div1, "220px", "415px");
+    handleFillCard(500, div2, "220px", "335px");
+    await delay(1000);
     div2.classList.add("fill");
     if (Number(div1.id) + Number(div2.id) > 10) {
       setScorePlayer(Number(div1.id) + Number(div2.id) - 10);
@@ -90,15 +90,16 @@ function App() {
     } else {
       setScorePlayer(Number(div1.id) + Number(div2.id));
     }
-    await delay(1000);
-    handleFillCard(200, div1, "185px", "632px");
-    handleFillCard(200, div2, "185px", "552px");
+    
+    await delay(500);
+    handleFillCard(500, div1, "185px", "632px");
+    handleFillCard(500, div2, "185px", "552px");
   };
 
   const handleFillCardTwo2 = async (div1: HTMLElement, div2: HTMLElement) => {
-    handleFillCard(200, div1, "220px", "415px");
-    handleFillCard(200, div2, "220px", "335px");
-    await delay(200);
+    handleFillCard(500, div1, "220px", "415px");
+    handleFillCard(500, div2, "220px", "335px");
+    await delay(1000);
     div2.classList.add("fill");
     if (Number(div1.id) + Number(div2.id) > 10) {
       setScoreBanker(Number(div1.id) + Number(div2.id) - 10);
@@ -107,9 +108,10 @@ function App() {
     } else {
       setScoreBanker(Number(div1.id) + Number(div2.id));
     }
-    await delay(1000);
-    handleFillCard(200, div1, "185px", "201px");
-    handleFillCard(200, div2, "185px", "122px");
+    
+    await delay(500);
+    handleFillCard(500, div1, "185px", "201px");
+    handleFillCard(500, div2, "185px", "122px");
   };
 
   const handleRenderCardThree = (list_eleBox: HTMLElement[]) => {
@@ -117,7 +119,7 @@ function App() {
       setScorePlayer((prevState: Score) => {
         if (prevState !== undefined) {
           if (prevState < 5) {
-            handleFillCard(200, list_eleBox[4], "185px", "711px");
+            handleFillCard(500, list_eleBox[4], "185px", "711px");
             list_eleBox[4].classList.add("fill");
             if (prevState + Number(list_eleBox[4].id) > 10) {
               resolve();
@@ -142,7 +144,7 @@ function App() {
       setScoreBanker((prevState: Score) => {
         if (prevState !== undefined) {
           if (prevState < 5) {
-            handleFillCard(200, list_eleBox[5], "185px", "41px");
+            handleFillCard(500, list_eleBox[5], "185px", "41px");
             list_eleBox[5].classList.add("fill");
             if (prevState + Number(list_eleBox[5].id) > 10) {
               resolve();
@@ -201,9 +203,9 @@ function App() {
     await handleFillCardTwo2(list_eleBox[1], list_eleBox[3]);
     await delay(500);
     await handleRenderCardThree(list_eleBox);
-    await delay(500);
+    await delay(1000);
     await handleRenderCardThree2(list_eleBox);
-    await delay(300);
+    await delay(1000);
     await handleResult()
   };
 
