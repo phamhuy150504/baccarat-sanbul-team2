@@ -71,11 +71,12 @@ main {
 .box {
   position: absolute;
   top: 0px;
-  right: -75px;
+  right: 0px;
   width: 75px;
   height: 100px;
   transition: all .5s;
   transform-style: preserve-3d;
+  z-index: -2;
 }
 
 .front {

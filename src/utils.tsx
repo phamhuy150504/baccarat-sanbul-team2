@@ -122,6 +122,7 @@ export const handleFillCard = (
     return setTimeout(() => {
       div.style.top = top;
       div.style.right = right;
+      div.style.zIndex = '1';
       resolve()
     }, ms);
   })
