@@ -1,0 +1,111 @@
+#banner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 620px;
+  width: 830px;
+}
+
+main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+#baccarat {
+  width: 90%;
+  height: 40%;
+  display: flex;
+  justify-content: space-between;
+}
+
+#player {
+  width: 33,33%;
+  display: flex;
+}
+
+#banker {
+  width: 33,33%;
+  display: flex;
+}
+
+#score {
+  display: flex;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%)
+}
+
+#score-player {
+  position: absolute;
+  top: -50px;
+  right: 50px;
+}
+
+#score-banker {
+  position: absolute;
+  top: -50px;
+  left: 50px;
+}
+
+.score-together {
+  font-size: 60px;
+}
+
+.card {
+  width: 75px;
+  height: 100px;
+  margin: 0 2px;
+}
+
+.btn {
+  position: absolute;
+  bottom: 100px;
+  left: 50%;
+  transform: translateX(-50%)
+}
+
+.box {
+  position: absolute;
+  top: 0px;
+  right: -75px;
+  width: 75px;
+  height: 100px;
+  transition: all .5s;
+  transform-style: preserve-3d;
+}
+
+.front {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  backface-visibility: hidden;
+  /* transform: rotateY(180deg); */
+}
+
+.back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  backface-visibility: hidden;
+  transform: rotateY(180deg);
+}
+
+.box.fill {
+  transform: rotateY(180deg);
+}
+
+#result {
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 40px;
+  color: red;
+  font-weight: bold;
+}
