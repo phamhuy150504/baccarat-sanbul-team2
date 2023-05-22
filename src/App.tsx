@@ -119,7 +119,7 @@ function App() {
       setScorePlayer((prevState: Score) => {
         if (prevState !== undefined) {
           if (prevState < 5) {
-            handleFillCard(500, list_eleBox[4], "185px", "711px");
+            handleFillCard(700, list_eleBox[4], "185px", "711px");
             list_eleBox[4].classList.add("fill");
             if (prevState + Number(list_eleBox[4].id) > 10) {
               resolve();
@@ -144,7 +144,7 @@ function App() {
       setScoreBanker((prevState: Score) => {
         if (prevState !== undefined) {
           if (prevState < 5) {
-            handleFillCard(500, list_eleBox[5], "185px", "41px");
+            handleFillCard(700, list_eleBox[5], "185px", "41px");
             list_eleBox[5].classList.add("fill");
             if (prevState + Number(list_eleBox[5].id) > 10) {
               resolve();
@@ -203,7 +203,7 @@ function App() {
     await handleFillCardTwo2(list_eleBox[1], list_eleBox[3]);
     await delay(500);
     await handleRenderCardThree(list_eleBox);
-    await delay(1000);
+    await delay(1500);
     await handleRenderCardThree2(list_eleBox);
     await delay(1000);
     await handleResult()
