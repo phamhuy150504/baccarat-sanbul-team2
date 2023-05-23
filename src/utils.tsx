@@ -54,7 +54,7 @@ import s11 from '../src/assets/images/s11.png'
 import s12 from '../src/assets/images/s12.png'
 import s13 from '../src/assets/images/s13.png'
 
-
+// initial 
 export const listCard = [
   { v: 1, f: c1 },
   { v: 2, f: c2 },
@@ -110,8 +110,7 @@ export const listCard = [
   { v: 0, f: d13 },
 ];
 
-
-
+// handle fill card
 export const handleFillCard = (
   ms: number,
   div: HTMLElement,
@@ -128,7 +127,33 @@ export const handleFillCard = (
   })
 };
 
+// handle delay
 export const delay = (ms: number) => {
   return new Promise((resolve) => setTimeout(resolve, ms));
+};
+
+  // handle Card Two
+export const handleFillCardTwo = async (div1: HTMLElement, div2: HTMLElement,  setScorePlayer: (score:number) => void, right1:string, right2:string) => {
+  handleFillCard(500, div1, '220px', '415px');
+  handleFillCard(500, div2, '220px', '335px');
+  await delay(1000);
+  
+  const card_back = document.querySelector('.card-back') as HTMLElement;
+  card_back.classList.add('fill-card')
+  card_back.addEventListener('animationend', () => {
+    card_back.remove();
+  });
+  
+  await delay(3000);
+
+    Number(div1.id) + Number(div2.id) > 10 
+  ? setScorePlayer(Number(div1.id) + Number(div2.id) - 10) 
+  : Number(div1.id) + Number(div2.id) === 10 
+  ? setScorePlayer(0)
+  : setScorePlayer(Number(div1.id) + Number(div2.id))
+
+  await delay(500);
+  handleFillCard(500, div1, '185px', right1);
+  handleFillCard(500, div2, '185px', right2);
 };
 

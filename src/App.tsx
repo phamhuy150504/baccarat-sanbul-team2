@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import "./App.css";
 import background from "./assets/bg_sanbul.jpg";
-import { delay, handleFillCard, listCard } from "./utils";
+import { delay, handleFillCard, handleFillCardTwo, listCard } from "./utils";
 import { checkApiParam } from "./components/CheckUrl";
 import bg_hidden from './assets/images/hidden.png'
 
@@ -10,9 +10,14 @@ type Score = undefined | number;
 function App() {
   // initial state
   const [box, setBox] = useState<object[]>();
-
   const [scorePlayer, setScorePlayer] = useState<Score>();
   const [scoreBanker, setScoreBanker] = useState<Score>();
+  const [start, setStart] = useState<boolean>(false)
+
+  // check APIkey path Url
+  useEffect(() => {
+    checkApiParam();
+  }, []);
 
   // initialize box
   useEffect(() => {
@@ -25,28 +30,59 @@ function App() {
       const newArr = shuffledList.slice(0, 6);
       setBox(newArr);
     };
-  
     initializeBox();
-  }, []);
+  }, [start]);
 
-   // check APIkey path Url
-   useEffect(() => {
-    checkApiParam();
-  }, []);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      handlePlayGame()
+    }, 28000)
+
+    return () => {
+      clearInterval(interval)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [start])
 
   // render box cards
   const renderBox = () =>
     box?.map((item: any, index: number) => {
       return (
         <div className="box" id={item.v} key={index}>
-          <img src={`${bg_hidden}`} className="front" />
+          {index <= 1 || index >= 4 ?
+            <>
+              <div
+                className="front"
+                style={{
+                  backgroundImage: `url(${bg_hidden})`,
+                }}></div>
 
-          <div
-            className="back"
-            style={{
-              backgroundImage: `url(${item.f})`,
-            }}
-          ></div>
+              <div
+                className="back"
+                style={{
+                  backgroundImage: `url(${item.f})`,
+                }}
+              ></div>
+            </>
+            :
+            <>
+
+              <div
+                className="card-front"
+                style={{
+                  backgroundImage: `url(${item.f})`,
+                }}
+              ></div>
+              <div
+                className="card-back"
+                style={{
+                  backgroundImage: `url(${bg_hidden})`,
+                }}></div>
+
+
+            </>
+          }
+
         </div>
       );
     });
@@ -55,6 +91,7 @@ function App() {
   const handleTranslateCard = async (list_eleBox: HTMLElement[]) => {
     for (let index = 0; index < list_eleBox.length; index++) {
       const div = list_eleBox[index];
+
       if (index === 0) {
         handleFillCard((index + 1) * 1100, div, "185px", "632px");
       }
@@ -74,43 +111,6 @@ function App() {
         setScoreBanker(Number(list_eleBox[1].id));
       }
     }
-  };
-
-  // handle Card Two
-  const handleFillCardTwo = async (div1: HTMLElement, div2: HTMLElement) => {
-    handleFillCard(500, div1, "220px", "415px");
-    handleFillCard(500, div2, "220px", "335px");
-    await delay(1000);
-    div2.classList.add("fill");
-    if (Number(div1.id) + Number(div2.id) > 10) {
-      setScorePlayer(Number(div1.id) + Number(div2.id) - 10);
-    } else if (Number(div1.id) + Number(div2.id) === 10) {
-      setScorePlayer(0);
-    } else {
-      setScorePlayer(Number(div1.id) + Number(div2.id));
-    }
-    
-    await delay(500);
-    handleFillCard(500, div1, "185px", "632px");
-    handleFillCard(500, div2, "185px", "552px");
-  };
-
-  const handleFillCardTwo2 = async (div1: HTMLElement, div2: HTMLElement) => {
-    handleFillCard(500, div1, "220px", "415px");
-    handleFillCard(500, div2, "220px", "335px");
-    await delay(1000);
-    div2.classList.add("fill");
-    if (Number(div1.id) + Number(div2.id) > 10) {
-      setScoreBanker(Number(div1.id) + Number(div2.id) - 10);
-    } else if (Number(div1.id) + Number(div2.id) === 10) {
-      setScoreBanker(0);
-    } else {
-      setScoreBanker(Number(div1.id) + Number(div2.id));
-    }
-    
-    await delay(500);
-    handleFillCard(500, div1, "185px", "201px");
-    handleFillCard(500, div2, "185px", "122px");
   };
 
   // render Card Three
@@ -164,10 +164,11 @@ function App() {
     });
   };
 
+  // handle Results
   const handleResult = () => {
     return new Promise<void>((resolve) => {
       const ele_result = document.getElementById("result") as HTMLElement;
-      setScorePlayer((prevPlayer) => {
+      setScorePlayer((prevPlayer: Score) => {
         setScoreBanker((prevBanker) => {
           if (prevPlayer !== undefined && prevBanker !== undefined) {
             if (prevPlayer > prevBanker) {
@@ -190,23 +191,35 @@ function App() {
     });
   };
 
+  // handle Reset
+  const resetState = () => {
+    const ele_result = document.getElementById("result") as HTMLElement;
+    setScorePlayer(undefined)
+    setScoreBanker(undefined)
+    ele_result.innerHTML = ''
+    setBox([])
+    setStart(!start)
+  };
+
   // handle Play Game
   const handlePlayGame = async () => {
     const list_eleBox = Array.from(
       document.getElementsByClassName("box") as HTMLCollectionOf<HTMLElement>
     );
-
     await handleTranslateCard(list_eleBox);
     await delay(600);
-    await handleFillCardTwo(list_eleBox[0], list_eleBox[2]);
+    await handleFillCardTwo(list_eleBox[0], list_eleBox[2], setScorePlayer, '632px', '552px');
     await delay(500);
-    await handleFillCardTwo2(list_eleBox[1], list_eleBox[3]);
+    await handleFillCardTwo(list_eleBox[1], list_eleBox[3], setScoreBanker, '201px', '122px');
     await delay(500);
     await handleRenderCardThree(list_eleBox);
     await delay(1500);
     await handleRenderCardThree2(list_eleBox);
     await delay(1000);
     await handleResult()
+    await delay(5000);
+    resetState()
+
   };
 
   return (
@@ -238,9 +251,6 @@ function App() {
         {renderBox()}
       </main>
       <div id="result"></div>
-      <button className="btn" onClick={handlePlayGame}>
-        Play Game
-      </button>
     </div>
   );
 }
