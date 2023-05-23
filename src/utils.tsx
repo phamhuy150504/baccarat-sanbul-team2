@@ -137,7 +137,14 @@ export const handleFillCardTwo = async (div1: HTMLElement, div2: HTMLElement,  s
   handleFillCard(500, div1, '220px', '415px');
   handleFillCard(500, div2, '220px', '335px');
   await delay(1000);
-  div2.classList.add("fill");
+  
+  const card_back = document.querySelector('.card-back') as HTMLElement;
+  card_back.classList.add('fill-card')
+  card_back.addEventListener('animationend', () => {
+    card_back.remove();
+  });
+  
+  await delay(3000);
 
     Number(div1.id) + Number(div2.id) > 10 
   ? setScorePlayer(Number(div1.id) + Number(div2.id) - 10) 

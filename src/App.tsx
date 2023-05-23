@@ -15,7 +15,7 @@ function App() {
   const [start, setStart] = useState<boolean>(false)
 
   // check APIkey path Url
-   useEffect(() => {
+  useEffect(() => {
     checkApiParam();
   }, []);
 
@@ -35,13 +35,13 @@ function App() {
 
   useEffect(() => {
     const interval = setInterval(() => {
-       handlePlayGame()
-    }, 25000)
-    
+      handlePlayGame()
+    }, 28000)
+
     return () => {
       clearInterval(interval)
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [start])
 
   // render box cards
@@ -49,17 +49,43 @@ function App() {
     box?.map((item: any, index: number) => {
       return (
         <div className="box" id={item.v} key={index}>
-          <img src={`${bg_hidden}`} className="front" />
+          {index <= 1 || index >= 4 ?
+            <>
+              <div
+                className="front"
+                style={{
+                  backgroundImage: `url(${bg_hidden})`,
+                }}></div>
 
-          <div
-            className="back"
-            style={{
-              backgroundImage: `url(${item.f})`,
-            }}
-          ></div>
+              <div
+                className="back"
+                style={{
+                  backgroundImage: `url(${item.f})`,
+                }}
+              ></div>
+            </>
+            :
+            <>
+
+              <div
+                className="card-front"
+                style={{
+                  backgroundImage: `url(${item.f})`,
+                }}
+              ></div>
+              <div
+                className="card-back"
+                style={{
+                  backgroundImage: `url(${bg_hidden})`,
+                }}></div>
+
+
+            </>
+          }
+
         </div>
       );
-  });
+    });
 
   // Translate Card
   const handleTranslateCard = async (list_eleBox: HTMLElement[]) => {
@@ -173,7 +199,6 @@ function App() {
     ele_result.innerHTML = ''
     setBox([])
     setStart(!start)
-    console.log(start);
   };
 
   // handle Play Game
