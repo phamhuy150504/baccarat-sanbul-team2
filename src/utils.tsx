@@ -136,15 +136,20 @@ export const delay = (ms: number) => {
 export const handleFillCardTwo = async (div1: HTMLElement, div2: HTMLElement,  setScorePlayer: (score:number) => void, right1:string, right2:string) => {
   handleFillCard(500, div1, '220px', '415px');
   handleFillCard(500, div2, '220px', '335px');
-  await delay(1000);
+  await delay(500);
   
   const card_back = document.querySelector('.card-back') as HTMLElement;
   card_back.classList.add('fill-card')
   card_back.addEventListener('animationend', () => {
     card_back.remove();
   });
+
+  await delay(2000);
   
-  await delay(3000);
+  handleFillCard(500, div1, '185px', right1);
+  handleFillCard(500, div2, '185px', right2);
+  
+  await delay(1000);
 
     Number(div1.id) + Number(div2.id) > 10 
   ? setScorePlayer(Number(div1.id) + Number(div2.id) - 10) 
@@ -152,8 +157,6 @@ export const handleFillCardTwo = async (div1: HTMLElement, div2: HTMLElement,  s
   ? setScorePlayer(0)
   : setScorePlayer(Number(div1.id) + Number(div2.id))
 
-  await delay(500);
-  handleFillCard(500, div1, '185px', right1);
-  handleFillCard(500, div2, '185px', right2);
+ 
 };
 

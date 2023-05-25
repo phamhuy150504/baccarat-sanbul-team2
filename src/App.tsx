@@ -78,8 +78,6 @@ function App() {
                 style={{
                   backgroundImage: `url(${bg_hidden})`,
                 }}></div>
-
-
             </>
           }
 
@@ -121,16 +119,16 @@ function App() {
           if (prevState < 5) {
             handleFillCard(700, list_eleBox[4], "185px", "711px");
             list_eleBox[4].classList.add("fill");
-            if (prevState + Number(list_eleBox[4].id) > 10) {
-              resolve();
-              return prevState + Number(list_eleBox[4].id) - 10;
-            } else if (prevState + Number(list_eleBox[4].id) == 10) {
-              resolve();
-              return 0;
-            } else {
-              resolve();
-              return prevState + Number(list_eleBox[4].id);
-            }
+              if (prevState + Number(list_eleBox[4].id) > 10) {
+                resolve();
+                return prevState + Number(list_eleBox[4].id) - 10;
+              } else if (prevState + Number(list_eleBox[4].id) == 10) {
+                resolve();
+                return 0;
+              } else {
+                resolve();
+                return prevState + Number(list_eleBox[4].id);
+              }
           }
           resolve();
           return prevState;
